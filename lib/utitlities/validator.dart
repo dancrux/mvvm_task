@@ -1,10 +1,9 @@
 class Validator {
-  static String? validateName({required String name}) {
-    if (name.isEmpty) {
-      return null;
-    }
-    if (name.isEmpty) {
+  static String? validatePhone({required String phone}) {
+    if (phone.isEmpty) {
       return 'Name can\'t be empty';
+    } else if (phone.length < 10) {
+      return 'Please Enter a correct phone no';
     }
 
     return null;

@@ -11,7 +11,7 @@ class AppStrings {
   static const forgotPassword = 'Forgot Password';
   static const passwordHint = 'Password';
   static const confrimPasswordHint = 'Confirm Password';
-  static const userNameHint = 'Enter your name';
+  static const phoneHint = 'Enter your Phone No';
   static const emailHint = 'Enter Your Email';
   static const email = 'Email';
   static const signUpWithPhone = 'Continue With Phone';
@@ -25,5 +25,4 @@ class AppStrings {
   static const loginRoute = '/';
   static const signUpRoute = '/sign_up';
   static const homeRoute = '/home';
-  
 }
