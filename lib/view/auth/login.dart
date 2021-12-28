@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_task/constants/colors.dart';
 import 'package:mvvm_task/constants/strings.dart';
@@ -6,7 +7,9 @@ import 'package:mvvm_task/utitlities/size_config.dart';
 import 'package:mvvm_task/utitlities/spacing.dart';
 import 'package:mvvm_task/utitlities/validator.dart';
 import 'package:mvvm_task/view/customWidgets/continue_button.dart';
+import 'package:mvvm_task/view/customWidgets/custom.dart';
 import 'package:mvvm_task/view/customWidgets/icon_button.dart';
+import 'package:mvvm_task/view/home/home.dart';
 import 'package:mvvm_task/viewmodels/auth_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +23,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailTextController = TextEditingController();
-  final _passwordTextController = TextEditingController();
+  final _passwordEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -50,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: LoginForm(
                 formKey: _formKey,
                 emailTextController: _emailTextController,
-                phoneTextController: _passwordTextController,
+                passwordTextController: _passwordEditingController,
               ),
             ),
             Spacing.mediumHeight(),
@@ -67,14 +71,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 43),
                           child: createIconButton(() async {
-                            // User? user = await authProvider.signInWithGoogle(
-                            //     context: context);
+                            if (_formKey.currentState!.validate()) {
+                              FocusScope.of(context).unfocus;
+                              String email = _emailTextController.text.trim();
+                              User? user = await authProvider.signInWithEmail(
+                                  email: _emailTextController.text.trim(),
+                                  password: _passwordEditingController.text,
+                                  context: context);
 
-                            // if (user != null) {
-                            //   Navigator.pushNamed(
-                            //       context, AppStrings.homeRoute);
-                            // }
-                          }, AppStrings.signUpWithPhone),
+                              if (user != null) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomeScreen(
+                                              userEmail: email,
+                                            )));
+                              }
+                            }
+                          }, AppStrings.login),
                         )
                       ],
                     ),
@@ -89,11 +103,11 @@ class LoginForm extends StatefulWidget {
     Key? key,
     required this.formKey,
     required this.emailTextController,
-    required this.phoneTextController,
+    required this.passwordTextController,
   }) : super(key: key);
   final GlobalKey formKey;
   final TextEditingController emailTextController;
-  final TextEditingController phoneTextController;
+  final TextEditingController passwordTextController;
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -129,7 +143,7 @@ class _LoginFormState extends State<LoginForm> {
                   ))),
           Spacing.bigHeight(),
           Text(
-            AppStrings.phoneHint,
+            AppStrings.passwordHint,
             style: TextStyle(
                 fontSize: getProportionatefontSize(11),
                 color: AppColors.formFieldLabel,
@@ -137,13 +151,16 @@ class _LoginFormState extends State<LoginForm> {
           ),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            keyboardType: TextInputType.number,
-            validator: (value) => Validator.validatePhone(phone: value ?? ''),
-            controller: widget.phoneTextController,
+            obscureText: true,
+            validator: (value) =>
+                Validator.validatePassword(password: value ?? ''),
+            controller: widget.passwordTextController,
             decoration: const InputDecoration(
-                hintText: AppStrings.phoneHint,
-                icon:
-                    Icon(Icons.phone_android_outlined, color: AppColors.black)),
+                hintText: AppStrings.passwordHint,
+                icon: Icon(
+                  Icons.password_rounded,
+                  color: AppColors.black,
+                )),
           ),
           Spacing.mediumHeight(),
         ],

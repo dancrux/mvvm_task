@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_task/constants/strings.dart';
@@ -21,16 +22,19 @@ class App extends StatelessWidget {
 }
 
 RouteFactory _routeFactory() {
+  var authIntance = FirebaseAuth.instance;
+  var email = authIntance.currentUser?.email;
   return (settings) {
     Widget screen;
     switch (settings.name) {
       case AppStrings.loginRoute:
         screen = const LoginScreen();
-
         break;
 
       case AppStrings.homeRoute:
-        screen = const HomeScreen();
+        screen = HomeScreen(
+          userEmail: email ?? '',
+        );
 
         break;
 

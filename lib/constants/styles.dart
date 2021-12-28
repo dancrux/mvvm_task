@@ -28,12 +28,6 @@ class AppStyles {
     fontSize: 14,
   );
 
-  static const bodyText2 = TextStyle(
-    fontWeight: FontWeight.w300,
-    fontSize: 12,
-  );
-
-
   static const button = TextStyle(
     fontWeight: FontWeight.w700,
     fontSize: 15,

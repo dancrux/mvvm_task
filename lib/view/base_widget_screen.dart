@@ -13,13 +13,16 @@ class BaseWidgetScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => AuthViewModel.instance(),
-      child: Consumer(builder: (context, AuthViewModel user, _) {
-        switch (user.authStatus) {
+      child: Consumer(builder: (context, AuthViewModel authViewModel, _) {
+        var userEmail = authViewModel.user?.email;
+        switch (authViewModel.authStatus) {
           case AuthStatus.unauthenticated:
             return const LoginScreen();
 
           case AuthStatus.authenticated:
-            return const HomeScreen();
+            return HomeScreen(
+              userEmail: userEmail ?? "",
+            );
           case AuthStatus.authenticating:
             return const LoginScreen();
 

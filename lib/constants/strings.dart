@@ -16,6 +16,10 @@ class AppStrings {
   static const email = 'Email';
   static const signUpWithPhone = 'Continue With Phone';
   static const continueText = 'Continue';
+  static const dbTableName = 'user';
+
+  static const phoneErrorText =
+      'There was an error validating monile number, please check and retry';
 
   static const baseUrl =
       'https://run.mocky.io/v3/5fb89b9e-7a58-4019-a3d2-f0fc439bf881';
@@ -23,6 +27,6 @@ class AppStrings {
   // Routes
 
   static const loginRoute = '/';
-  static const signUpRoute = '/sign_up';
+
   static const homeRoute = '/home';
 }
