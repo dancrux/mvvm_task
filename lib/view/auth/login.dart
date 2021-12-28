@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_task/constants/colors.dart';
 import 'package:mvvm_task/constants/strings.dart';
@@ -62,35 +61,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        continueButton(() async {
-                          if (_formKey.currentState!.validate()) {
-                            FocusScope.of(context).unfocus;
-
-                            User? user =
-                                await authProvider.signInWithEmailPassword(
-                                    email: _emailTextController.text,
-                                    password: _passwordTextController.text,
-                                    context: context);
-
-                            if (user != null) {
-                              Navigator.pushNamed(
-                                  context, AppStrings.homeRoute);
-                            }
-                          }
-                        }, 16.0, AppStrings.continueText),
                         SizedBox(
                           height: getProportionateScreenHeight(23.0),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 43),
                           child: createIconButton(() async {
-                            User? user = await authProvider.signInWithGoogle(
-                                context: context);
+                            // User? user = await authProvider.signInWithGoogle(
+                            //     context: context);
 
-                            if (user != null) {
-                              Navigator.pushNamed(
-                                  context, AppStrings.homeRoute);
-                            }
+                            // if (user != null) {
+                            //   Navigator.pushNamed(
+                            //       context, AppStrings.homeRoute);
+                            // }
                           }, AppStrings.signUpWithPhone),
                         )
                       ],
@@ -125,7 +108,7 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Spacing.mediumHeight(),
+          Spacing.bigHeight(),
           Text(
             AppStrings.emailHint,
             style: TextStyle(
@@ -144,7 +127,7 @@ class _LoginFormState extends State<LoginForm> {
                     Icons.email_outlined,
                     color: AppColors.black,
                   ))),
-          Spacing.mediumHeight(),
+          Spacing.bigHeight(),
           Text(
             AppStrings.phoneHint,
             style: TextStyle(

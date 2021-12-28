@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:mvvm_task/view/auth/login.dart';
 import 'package:mvvm_task/view/home/home.dart';
 import 'package:mvvm_task/viewmodels/auth_viewmodel.dart';
 import 'package:provider/provider.dart';
-
 
 class BaseWidgetScreen extends StatelessWidget {
   const BaseWidgetScreen({
@@ -14,7 +12,7 @@ class BaseWidgetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => AuthViewModel(),
+      create: (_) => AuthViewModel.instance(),
       child: Consumer(builder: (context, AuthViewModel user, _) {
         switch (user.authStatus) {
           case AuthStatus.unauthenticated:

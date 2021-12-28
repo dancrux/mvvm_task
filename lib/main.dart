@@ -6,9 +6,8 @@ import 'package:mvvm_task/viewmodels/auth_viewmodel.dart';
 import 'package:mvvm_task/viewmodels/home_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
@@ -19,13 +18,11 @@ void main() {
     runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthViewModel>(
-            create: (context) => AuthViewModel()),
+            create: (context) => AuthViewModel.instance()),
         ChangeNotifierProvider<HomeViewModel>(
             create: (context) => HomeViewModel()),
-    
       ],
       child: const App(),
     ));
   });
 }
-

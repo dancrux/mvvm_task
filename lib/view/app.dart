@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_task/constants/strings.dart';
@@ -30,13 +28,12 @@ RouteFactory _routeFactory() {
         screen = const LoginScreen();
 
         break;
-     
-        break;
+
       case AppStrings.homeRoute:
         screen = const HomeScreen();
 
         break;
-   
+
       default:
         return null;
     }
