@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mvvm_task/constants/colors.dart';
 import 'package:mvvm_task/constants/strings.dart';
 import 'package:mvvm_task/constants/styles.dart';
+import 'package:mvvm_task/db/shared_prefs_db.dart';
 import 'package:mvvm_task/utitlities/size_config.dart';
 import 'package:mvvm_task/utitlities/spacing.dart';
 import 'package:mvvm_task/utitlities/validator.dart';
@@ -22,6 +23,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  SharedPrefsUtil sharedPrefsUtil = SharedPrefsUtil();
   final _formKey = GlobalKey<FormState>();
   final _emailTextController = TextEditingController();
   final _passwordEditingController = TextEditingController();
@@ -76,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context: context);
 
                             if (user != null) {
+                              sharedPrefsUtil.saveEmail(email);
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -96,6 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context: context);
 
                             if (user != null) {
+                              sharedPrefsUtil.saveEmail(email);
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
