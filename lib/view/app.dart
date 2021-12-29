@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_task/constants/strings.dart';
+import 'package:mvvm_task/db/shared_prefs_db.dart';
 import 'package:mvvm_task/view/auth/login.dart';
 import 'package:mvvm_task/view/base_widget_screen.dart';
 import 'package:mvvm_task/view/home/home.dart';
@@ -33,7 +34,7 @@ RouteFactory _routeFactory() {
 
       case AppStrings.homeRoute:
         screen = HomeScreen(
-          userEmail: email ?? '',
+          userEmail: email ?? SharedPrefsUtil.instance.getEmail(),
         );
 
         break;

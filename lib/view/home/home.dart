@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Medicine>> medItemList;
   List<Medicine>? medicine = List.empty();
   late Future email;
-  SharedPrefsUtil sharedPrefsUtil = SharedPrefsUtil();
+
   Repository repository = Repository();
 
   @override
@@ -29,13 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     final homeProvider = Provider.of<HomeViewModel>(context, listen: false);
     medItemList = homeProvider.getMedInfo(context);
-    sharedPrefsUtil.saveEmail(widget.userEmail);
-    email = sharedPrefsUtil.getEmail('userEmail');
-    print(email);
+
+    email = SharedPrefsUtil.instance.getEmail();
   }
 
   @override
   Widget build(BuildContext context) {
+    SharedPrefsUtil.instance.saveEmail(widget.userEmail);
     String greeting() {
       var currentTime = DateTime.now().hour;
       if (currentTime <= 12) {
@@ -66,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: AppStyles.heading2,
               ),
               Spacing.smallHeight(),
+              // Text(SharedPrefsUtil.instance.getEmail() ?? widget.userEmail),
               FutureBuilder(
                   future: email,
                   builder: (context, snapshot) {

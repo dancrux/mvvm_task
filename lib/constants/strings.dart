@@ -23,7 +23,7 @@ class AppStrings {
       'There was an error validating monile number, please check and retry';
 
   static const baseUrl =
-      'https://run.mocky.io/v3/5fb89b9e-7a58-4019-a3d2-f0fc439bf881';
+      'https://run.mocky.io/v3/a9539b2e-8c8b-4cc0-bd46-dc6110b9d93f';
 
   // Routes
 

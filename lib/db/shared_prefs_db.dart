@@ -1,13 +1,19 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsUtil {
-  Future saveEmail(String email) async {
+  SharedPrefsUtil._privateConstructor();
+
+  static final SharedPrefsUtil instance = SharedPrefsUtil._privateConstructor();
+
+  static const String _userEmail = 'userEmail';
+  saveEmail(String email) async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.setString('userEmail', email);
+    preferences.setString(_userEmail, email);
+    print("Prefs Stuff $email");
   }
 
-  Future getEmail(String email) async {
+  getEmail() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getString('userEmail');
+    return preferences.getString(_userEmail);
   }
 }

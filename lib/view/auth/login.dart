@@ -23,7 +23,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  SharedPrefsUtil sharedPrefsUtil = SharedPrefsUtil();
   final _formKey = GlobalKey<FormState>();
   final _emailTextController = TextEditingController();
   final _passwordEditingController = TextEditingController();
@@ -78,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context: context);
 
                             if (user != null) {
-                              sharedPrefsUtil.saveEmail(email);
+                              SharedPrefsUtil.instance.saveEmail(email);
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -99,7 +98,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context: context);
 
                             if (user != null) {
-                              sharedPrefsUtil.saveEmail(email);
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

@@ -34,6 +34,7 @@ class HomeViewModel extends ChangeNotifier {
     } catch (e) {
       _state = HomeState.error;
       notifyListeners();
+      print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(customSnackBar(content: e.toString()));
     }

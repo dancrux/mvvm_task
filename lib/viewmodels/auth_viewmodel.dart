@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_task/constants/styles.dart';
+import 'package:mvvm_task/db/shared_prefs_db.dart';
 import 'package:mvvm_task/view/customWidgets/custom.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -13,8 +14,7 @@ enum AuthStatus {
 }
 
 class AuthViewModel extends ChangeNotifier {
-
-   static final GoogleSignIn googleSignIn = GoogleSignIn();
+  static final GoogleSignIn googleSignIn = GoogleSignIn();
   final FirebaseAuth _firebaseAuth;
   AuthStatus _authStatus = AuthStatus.uninitialized;
 
@@ -49,6 +49,7 @@ class AuthViewModel extends ChangeNotifier {
       _user = userCredential.user;
       await user?.reload();
       _user = _firebaseAuth.currentUser;
+      SharedPrefsUtil.instance.saveEmail(email);
       _authStatus = AuthStatus.authenticated;
       notifyListeners();
     } on FirebaseAuthException catch (e) {
@@ -81,6 +82,10 @@ class AuthViewModel extends ChangeNotifier {
         final UserCredential userCredential =
             await _firebaseAuth.signInWithCredential(credential);
         _user = userCredential.user;
+        var email = _user?.email ?? "Anonymous";
+
+        SharedPrefsUtil.instance.saveEmail(email);
+
         _authStatus = AuthStatus.authenticated;
         notifyListeners();
       } on FirebaseAuthException catch (e) {
