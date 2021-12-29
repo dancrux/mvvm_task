@@ -91,12 +91,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 43),
                           child: createGoogleButton(() async {
+                            String email = _emailTextController.text.trim();
                             User? user = await authProvider.signInWithGoogle(
                                 context: context);
 
                             if (user != null) {
-                              Navigator.pushNamed(
-                                  context, AppStrings.homeRoute);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen(
+                                            userEmail: email,
+                                          )));
                             }
                           }, AppStrings.signUpWithGoogle),
                         ),

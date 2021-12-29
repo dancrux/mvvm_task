@@ -20,8 +20,6 @@ class HomeViewModel extends ChangeNotifier {
   Future<List<Medicine>> getMedInfo(
     BuildContext context,
   ) async {
-    _state = HomeState.loading;
-    notifyListeners();
     try {
       var result = await repository.getMedicineInfo();
       _state = HomeState.completed;

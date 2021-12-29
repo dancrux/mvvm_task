@@ -9,20 +9,30 @@ import 'package:mvvm_task/utitlities/spacing.dart';
 import 'package:mvvm_task/viewmodels/home_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String userEmail;
   HomeScreen({Key? key, required this.userEmail}) : super(key: key);
 
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Medicine>> medItemList;
+  List<Medicine>? medicine = List.empty();
+  SharedPrefsUtil sharedPrefsUtil = SharedPrefsUtil();
+  Repository repository = Repository();
+
+  @override
+  void initState() {
+    super.initState();
+    final homeProvider = Provider.of<HomeViewModel>(context, listen: false);
+    medItemList = homeProvider.getMedInfo(context);
+    sharedPrefsUtil.saveEmail(widget.userEmail);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final homeProvider = Provider.of<HomeViewModel>(context, listen: false);
-    medItemList = homeProvider.getMedInfo(context);
-    List<Medicine>? medicine = List.empty();
-    Repository repository = Repository();
-    SharedPrefsUtil sharedPrefsUtil = SharedPrefsUtil();
-    sharedPrefsUtil.saveEmail(userEmail);
     String greeting() {
       var currentTime = DateTime.now().hour;
       if (currentTime <= 12) {
@@ -40,9 +50,11 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Spacing.mediumHeight(),
@@ -55,7 +67,9 @@ class HomeScreen extends StatelessWidget {
                   future: sharedPrefsUtil.getEmail('userEmail'),
                   builder: (context, snapshot) {
                     return Text(
-                      snapshot.hasData ? snapshot.data.toString() : userEmail,
+                      snapshot.hasData
+                          ? snapshot.data.toString()
+                          : widget.userEmail,
                       style: AppStyles.heading1,
                     );
                   }),
@@ -142,7 +156,7 @@ class MedcineItem extends StatelessWidget {
           children: [
             Text('${medicine.name}'),
             Spacing.mediumHeight(),
-            Text('${medicine.dose}', maxLines: 3, style: AppStyles.heading5),
+            Text('${medicine.dose}', style: AppStyles.heading5),
             Spacing.mediumHeight(),
             Text('${medicine.strength}'),
           ],
