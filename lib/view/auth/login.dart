@@ -8,6 +8,7 @@ import 'package:mvvm_task/utitlities/spacing.dart';
 import 'package:mvvm_task/utitlities/validator.dart';
 import 'package:mvvm_task/view/customWidgets/continue_button.dart';
 import 'package:mvvm_task/view/customWidgets/custom.dart';
+import 'package:mvvm_task/view/customWidgets/google_button.dart';
 import 'package:mvvm_task/view/customWidgets/icon_button.dart';
 import 'package:mvvm_task/view/home/home.dart';
 import 'package:mvvm_task/viewmodels/auth_viewmodel.dart';
@@ -65,31 +66,43 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        createIconButton(() async {
+                          if (_formKey.currentState!.validate()) {
+                            FocusScope.of(context).unfocus;
+                            String email = _emailTextController.text.trim();
+                            User? user = await authProvider.signInWithEmail(
+                                email: _emailTextController.text.trim(),
+                                password: _passwordEditingController.text,
+                                context: context);
+
+                            if (user != null) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreen(
+                                            userEmail: email,
+                                          )));
+                            }
+                          }
+                        }, AppStrings.login),
                         SizedBox(
                           height: getProportionateScreenHeight(23.0),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 43),
-                          child: createIconButton(() async {
-                            if (_formKey.currentState!.validate()) {
-                              FocusScope.of(context).unfocus;
-                              String email = _emailTextController.text.trim();
-                              User? user = await authProvider.signInWithEmail(
-                                  email: _emailTextController.text.trim(),
-                                  password: _passwordEditingController.text,
-                                  context: context);
+                          child: createGoogleButton(() async {
+                            User? user = await authProvider.signInWithGoogle(
+                                context: context);
 
-                              if (user != null) {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomeScreen(
-                                              userEmail: email,
-                                            )));
-                              }
+                            if (user != null) {
+                              Navigator.pushNamed(
+                                  context, AppStrings.homeRoute);
                             }
-                          }, AppStrings.login),
-                        )
+                          }, AppStrings.signUpWithGoogle),
+                        ),
+                        SizedBox(
+                          height: getProportionateScreenHeight(23.0),
+                        ),
                       ],
                     ),
                   ),

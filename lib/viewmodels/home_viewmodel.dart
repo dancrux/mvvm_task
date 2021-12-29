@@ -17,8 +17,9 @@ class HomeViewModel extends ChangeNotifier {
 
   List<Medicine> medicineInfo = List.empty();
 
-  Future<List<Medicine>> getBooks(BuildContext context,
-      [String? searchTerm]) async {
+  Future<List<Medicine>> getMedInfo(
+    BuildContext context,
+  ) async {
     _state = HomeState.loading;
     notifyListeners();
     try {

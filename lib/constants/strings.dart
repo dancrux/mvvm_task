@@ -15,6 +15,7 @@ class AppStrings {
   static const emailHint = 'Enter Your Email';
   static const email = 'Email';
   static const signUpWithPhone = 'Continue With Phone';
+  static const signUpWithGoogle = 'Continue With Google';
   static const continueText = 'Continue';
   static const dbTableName = 'user';
 
