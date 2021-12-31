@@ -20,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Medicine>> medItemList;
   List<Medicine>? medicine = List.empty();
-  late Future email;
+  String? email;
 
   Repository repository = Repository();
 
@@ -29,8 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     final homeProvider = Provider.of<HomeViewModel>(context, listen: false);
     medItemList = homeProvider.getMedInfo(context);
-
-    email = SharedPrefsUtil.instance.getEmail();
+    SharedPrefsUtil.instance.getEmail().then((value) {
+      email = value;
+    });
   }
 
   @override
@@ -66,17 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: AppStyles.heading2,
               ),
               Spacing.smallHeight(),
-              // Text(SharedPrefsUtil.instance.getEmail() ?? widget.userEmail),
-              FutureBuilder(
-                  future: email,
-                  builder: (context, snapshot) {
-                    return Text(
-                      snapshot.hasData
-                          ? snapshot.data.toString()
-                          : widget.userEmail,
-                      style: AppStyles.heading1,
-                    );
-                  }),
+              Text(
+                email ?? widget.userEmail,
+                style: AppStyles.heading1,
+              ),
+
+              // FutureBuilder(
+              //     future: email,
+              //     builder: (context, snapshot) {
+              //       return Text(
+              //         snapshot.hasData
+              //             ? snapshot.data.toString()
+              //             : widget.userEmail,
+              //         style: AppStyles.heading1,
+              //       );
+              //     }),
               Flexible(
                 child: FutureBuilder<List<Medicine>>(
                     future: medItemList,

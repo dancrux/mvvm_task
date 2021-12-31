@@ -49,7 +49,7 @@ class AuthViewModel extends ChangeNotifier {
       _user = userCredential.user;
       await user?.reload();
       _user = _firebaseAuth.currentUser;
-      SharedPrefsUtil.instance.saveEmail(email);
+      await SharedPrefsUtil.instance.saveEmail(email);
       _authStatus = AuthStatus.authenticated;
       notifyListeners();
     } on FirebaseAuthException catch (e) {
@@ -84,7 +84,7 @@ class AuthViewModel extends ChangeNotifier {
         _user = userCredential.user;
         var email = _user?.email ?? "Anonymous";
 
-        SharedPrefsUtil.instance.saveEmail(email);
+        await SharedPrefsUtil.instance.saveEmail(email);
 
         _authStatus = AuthStatus.authenticated;
         notifyListeners();

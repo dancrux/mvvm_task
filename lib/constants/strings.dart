@@ -20,7 +20,7 @@ class AppStrings {
   static const dbTableName = 'user';
 
   static const phoneErrorText =
-      'There was an error validating monile number, please check and retry';
+      'There was an error validating mobile number, please check and retry';
 
   static const baseUrl =
       'https://run.mocky.io/v3/a9539b2e-8c8b-4cc0-bd46-dc6110b9d93f';
